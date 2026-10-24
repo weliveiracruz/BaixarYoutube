@@ -1,0 +1,33 @@
+{
+  "name": "baixar-youtube",
+  "productName": "Baixar YouTube",
+  "version": "1.0.0-beta.1",
+  "description": "Baixe vídeos e playlists do YouTube num aplicativo acessível para Windows.",
+  "author": "weliveiracruz",
+  "license": "GPL-2.0-only",
+  "private": true,
+  "main": "build/main.js",
+  "scripts": {
+    "build": "node tools/build-app.mjs",
+    "start": "npm run build && electron .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test:unit": "vitest run tests/unit",
+    "test:bin": "vitest run tests/bin",
+    "test:e2e": "npm run build && playwright test",
+    "test:real": "npm run build && playwright test --config playwright.real.config.ts",
+    "test": "npm run typecheck && npm run test:unit && npm run test:bin && npm run test:e2e",
+    "fetch-binaries": "node tools/fetch-binaries.mjs",
+    "dist": "node tools/release.mjs"
+  },
+  "devDependencies": {
+    "@electron/fuses": "2.1.3",
+    "@playwright/test": "1.64.0",
+    "@types/node": "24.19.2",
+    "axe-core": "4.14.0",
+    "electron": "44.7.0",
+    "electron-builder": "26.17.0",
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3",
+    "vitest": "5.0.3"
+  }
+}

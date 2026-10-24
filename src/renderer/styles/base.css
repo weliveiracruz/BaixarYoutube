@@ -1,0 +1,139 @@
+/* Baixar YouTube - base.css: reset, typography, focus, high contrast, reduced motion. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-text);
+  font-size: 100%; /* follows the Windows text size and Ctrl+= zoom (RA-11) */
+  -webkit-text-size-adjust: 100%;
+  font-kerning: normal;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+}
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: -0.4px;
+}
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  letter-spacing: -0.2px;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Access key letter, underlined as in Windows (RA-03). */
+.ak {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+/* Focus always visible (RA-08): 3 px ring, 2 px away, never hidden. */
+:focus {
+  outline: none;
+}
+:focus-visible,
+.btn:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+*:focus {
+  scroll-margin: var(--space-xl);
+}
+
+/* Windows high contrast (RA-10): system colors, visible borders everywhere. */
+@media (forced-colors: active) {
+  :root {
+    --focus-ring: Highlight;
+  }
+  .btn,
+  input,
+  select,
+  textarea,
+  .media,
+  .status-card,
+  dialog,
+  progress,
+  .badge {
+    border: 1px solid CanvasText !important;
+  }
+  .btn:disabled {
+    color: GrayText !important;
+    border-color: GrayText !important;
+  }
+  :focus-visible,
+  .btn:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 3px solid Highlight;
+  }
+  .app-header {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border-bottom: 1px solid CanvasText;
+  }
+  .app-header h1 {
+    color: CanvasText !important;
+  }
+  progress::-webkit-progress-value {
+    background: Highlight !important;
+  }
+  .media-strip {
+    display: none;
+  }
+}

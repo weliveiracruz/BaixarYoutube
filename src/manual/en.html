@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-motion="system">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Baixar YouTube manual</title>
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="manual.css" />
+  </head>
+  <body>
+    <header class="app-header"><h1>Baixar YouTube manual</h1></header>
+    <main class="page manual">
+      <p>Baixar YouTube downloads videos and playlists from YouTube and YouTube Music, or only the audio, in a simple window that works with screen readers, the keyboard, magnifiers and high contrast. Esc closes this manual.</p>
+
+      <h2>Before you start</h2>
+      <p>Download only what you have the right to download, respecting copyright and the YouTube Terms of Service. The app uses no accounts or cookies and keeps no history of links. yt-dlp and FFmpeg come inside the app: nothing else needs to be installed.</p>
+      <p>The first time, Windows may show "Windows protected your PC", because the app is not digitally signed yet. Choose "More info" and then "Run anyway".</p>
+
+      <h2>Download a video</h2>
+      <ol>
+        <li>Copy the link of the video in the browser. When the app opens, the link in the clipboard is already in the URL field, selected.</li>
+        <li>As soon as the link is valid, the preview shows the thumbnail, title, channel and length. The title is also spoken.</li>
+        <li>Choose the folder (Alt+B) and the format (Alt+O): MP4 video in the best quality, 720p or 360p, MP3 audio or M4A audio.</li>
+        <li>Press Enter or Alt+D to Download. The progress is spoken every 10% (adjustable in Settings) and shown in the bar and in the Status field.</li>
+        <li>At the end, use Open file (Alt+F) or Open folder (Alt+L). Nothing is overwritten: a repeated file becomes "title (2)".</li>
+      </ol>
+
+      <h2>Download a playlist</h2>
+      <p>Paste the link of a playlist, a YouTube Music album or a mix. The app reads the list and asks whether to download every video. They go to a new folder named after the playlist, numbered in order ("001 - title"). Private or removed videos are skipped and counted at the end. If the link is of a video inside a playlist, the app asks whether you want only the video or the whole playlist. Cancelling keeps the files that already finished.</p>
+
+      <h2>Keys</h2>
+      <table>
+        <caption class="visually-hidden">Keys of the main window</caption>
+        <thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
+        <tbody>
+          <tr><td>Ctrl+Alt+Y</td><td>Opens the window from anywhere in Windows (configurable)</td></tr>
+          <tr><td>Alt+U</td><td>URL field</td></tr>
+          <tr><td>Alt+R / Alt+B</td><td>Download folder / Browse</td></tr>
+          <tr><td>Alt+O</td><td>Format</td></tr>
+          <tr><td>Enter, Alt+D / Alt+C</td><td>Download / Cancel</td></tr>
+          <tr><td>Alt+S</td><td>Status field</td></tr>
+          <tr><td>Alt+F / Alt+L</td><td>Open file / Open folder</td></tr>
+          <tr><td>Alt+T</td><td>Settings</td></tr>
+          <tr><td>Esc, Alt+E, Alt+F4</td><td>Close</td></tr>
+          <tr><td>Ctrl+L</td><td>Back to the URL field</td></tr>
+          <tr><td>Ctrl+= / Ctrl+- / Ctrl+0</td><td>Makes everything bigger, smaller or the default size</td></tr>
+          <tr><td>F1</td><td>This manual</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Closing during a download</h2>
+      <p>The app asks: continue in the background (the window goes away and the icon stays in the notification area; the end is announced by a Windows notification), cancel the download, or go back. Quitting from the notification area icon also cancels and deletes the incomplete files.</p>
+
+      <h2>Settings</h2>
+      <p>Default folder, how often progress is announced (10%, 25% or off), theme (follow Windows, light, dark), animations (follow Windows, on, off), show the video thumbnail, language, global shortcut, start with Windows and the download engine version, with the Update the download engine button. With the thumbnail off, no picture is fetched.</p>
+
+      <h2>When something goes wrong</h2>
+      <ul>
+        <li><strong>"YouTube changed"</strong> or <strong>"confirm that this is not a robot"</strong>: in Settings, use Update the download engine and try again.</li>
+        <li><strong>"The download engine is missing or damaged"</strong>: the antivirus may have blocked yt-dlp.exe. Reinstall the app or allow its folder in the antivirus.</li>
+        <li><strong>Private, age-restricted or members-only video</strong>: the app uses no accounts and cannot download it.</li>
+      </ul>
+
+      <h2>Licenses</h2>
+      <p>Baixar YouTube: GPL-2.0. yt-dlp: Unlicense. FFmpeg: GPL (shared build of yt-dlp/FFmpeg-Builds). The licenses are in the resources\bin folder of the app. The colors follow the Nubank visual language; the app is not a Nubank product.</p>
+    </main>
+  </body>
+</html>

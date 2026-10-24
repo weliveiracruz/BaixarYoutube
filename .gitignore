@@ -1,0 +1,8 @@
+node_modules/
+build/
+dist/
+resources/bin/*
+!resources/bin/.gitkeep
+.cache/
+test-results/
+playwright-report/

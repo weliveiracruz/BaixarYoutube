@@ -1,0 +1,138 @@
+/* Baixar YouTube - tokens.css
+   Tokens of the Nubank visual language (SDD 5). Values marked * were darkened or
+   lightened for WCAG contrast (SDD 5.2); tests/unit/tokens.test.ts measures every pair. */
+
+:root {
+  color-scheme: light;
+
+  /* color - light */
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f5f2fa;
+  --color-bg-purple-tint: #f3e9fd;
+  --color-surface: #ffffff;
+  --color-brand: #820ad1;
+  --color-brand-hover: #6a0aab;
+  --color-brand-deepest: #3d0764;
+  --color-brand-soft: rgba(130, 10, 209, 0.1);
+  --color-brand-text: #820ad1;
+  --color-badge-bg: #f0e6fa;
+  --color-on-brand: #ffffff;
+  --color-header-bg: #820ad1;
+  --color-text: #000000;
+  --color-text-body: #1a1a1a;
+  --color-text-muted: #595959;
+  --color-text-disabled: #6b6b6b; /* * */
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-control: #767676; /* * */
+  --color-success: #1f7a35; /* * */
+  --color-warning: #8a5a00; /* * */
+  --color-danger: #b3261e; /* * */
+  --color-danger-hover: #8c1d18;
+  --color-on-danger: #ffffff;
+  --color-accent-pink: #ff4d8b;
+  --color-accent-yellow: #ffd23f;
+  --focus-ring: #820ad1; /* * */
+  --backdrop: rgba(17, 0, 33, 0.5);
+
+  /* typography */
+  --font-display: "Nu Sans Display", "nuSansDisplay", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  --font-text: "Nu Sans Text", "nuSansText", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --text-h1: 2rem;
+  --text-h2: 1.5rem;
+  --text-h4: 1.25rem;
+  --text-title-sm: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-label: 0.8125rem;
+  --leading-h1: 1.15;
+  --leading-h2: 1.25;
+  --leading-h4: 1.3;
+  --leading-body: 1.55;
+  --leading-tight: 1.2;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* spacing (base 4) */
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-base: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xxl: 4rem;
+
+  /* radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  /* shadow */
+  --shadow-ambient: 0 1px 2px rgba(17, 0, 33, 0.06);
+  --shadow-soft: 0 4px 12px rgba(17, 0, 33, 0.1);
+  --shadow-standard: 0 8px 24px rgba(17, 0, 33, 0.14);
+  --shadow-elevated: 0 24px 48px -8px rgba(17, 0, 33, 0.2);
+
+  /* motion (SDD 5.7) */
+  --motion-fast: 150ms;
+  --motion-standard: 240ms;
+  --motion-slow: 320ms;
+  --motion-fade: 150ms; /* kept with reduced motion: it moves nothing */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* accessibility */
+  --min-target: 44px;
+  --control-height: 52px;
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #1a0b29;
+    --color-bg-subtle: #2a1240;
+    --color-bg-purple-tint: #2a1240;
+    --color-surface: #2a1240;
+    --color-brand: #a32ff0;
+    --color-brand-hover: #b85cff;
+    --color-brand-soft: rgba(201, 140, 255, 0.18);
+    --color-brand-text: #c98cff; /* * */
+    --color-badge-bg: #3d0764;
+    --color-header-bg: #3d0764;
+    --color-text: #ffffff;
+    --color-text-body: #ecd9ff;
+    --color-text-muted: #b69bd1;
+    --color-text-disabled: #a48bbd;
+    --color-border: rgba(255, 255, 255, 0.14);
+    --color-border-control: rgba(255, 255, 255, 0.45);
+    --color-success: #5ad17a; /* * */
+    --color-warning: #ffc857; /* * */
+    --color-danger: #ff8a80; /* * */
+    --color-danger-hover: #ffaba3;
+    --color-on-danger: #1a0b29;
+    --focus-ring: #c98cff; /* * */
+    --backdrop: rgba(0, 0, 0, 0.6);
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-standard: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Animations off: the setting, or Windows' "Animation effects" off (RA-12). */
+:root[data-motion="off"] {
+  --motion-fast: 0ms;
+  --motion-standard: 0ms;
+  --motion-slow: 0ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-motion="system"] {
+    --motion-fast: 0ms;
+    --motion-standard: 0ms;
+    --motion-slow: 0ms;
+  }
+}

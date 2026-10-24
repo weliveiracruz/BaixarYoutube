@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="pt-BR" data-motion="system">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Baixar do YouTube</title>
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/components.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <!-- RA-04: announcements. The Status field is not a live region (no double reading). -->
+    <div id="live-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="live-alert" class="visually-hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <header class="app-header">
+      <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect width="40" height="40" rx="9" fill="currentColor" opacity="0.18" />
+        <path d="M20 9v15m0 0-6.5-6.5M20 24l6.5-6.5M11 30h18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <h1 id="app-title" data-i18n="appTitle"></h1>
+    </header>
+
+    <main>
+      <!-- main view -->
+      <div id="view-main" class="page">
+        <form id="form" novalidate>
+          <div class="field">
+            <label for="url" data-label="urlLabel"></label>
+            <input id="url" type="url" maxlength="2048" autocomplete="off" spellcheck="false" aria-describedby="url-help url-error" />
+            <p id="url-help" class="help" data-i18n="urlHelp"></p>
+            <p id="url-error" class="field-error" hidden>
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 2 1 18h18L10 2Zm0 5v5m0 2.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <span id="url-error-text"></span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="folder" data-label="folderLabel"></label>
+            <div class="row">
+              <input id="folder" type="text" readonly aria-describedby="folder-error" />
+              <button id="browse" type="button" class="btn btn-ghost" data-label="browse"></button>
+            </div>
+            <p id="folder-error" class="field-error" hidden>
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 2 1 18h18L10 2Zm0 5v5m0 2.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <span id="folder-error-text"></span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="format" data-label="formatLabel"></label>
+            <div class="select-wrap">
+              <select id="format"></select>
+              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </div>
+          </div>
+
+          <!-- RF-25 / RA-18: the picture is decorative; the same content is in the caption. -->
+          <figure id="media" class="media is-video" hidden>
+            <div class="media-thumb">
+              <div id="media-skeleton" class="media-skeleton"></div>
+              <img id="media-img" alt="" hidden />
+              <div id="media-placeholder" class="media-placeholder" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2" /><path d="m10 9 5 3-5 3V9Z" fill="currentColor" /></svg>
+                <span data-i18n="noThumbnail"></span>
+              </div>
+              <div id="media-strip" class="media-strip" aria-hidden="true"></div>
+            </div>
+            <figcaption>
+              <span id="media-title" class="media-title"></span>
+              <div id="media-loading" aria-hidden="true">
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+              </div>
+              <span id="media-meta" class="media-meta"></span>
+              <span id="media-badge" class="badge"></span>
+            </figcaption>
+          </figure>
+
+          <button id="go" type="submit" class="btn btn-primary btn-block">
+            <span class="go-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" focusable="false"><path id="go-path" d="M10 3v10m0 0-4-4m4 4 4-4M4 17h12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+            <span id="go-label"></span>
+          </button>
+        </form>
+
+        <section id="status-card" class="status-card">
+          <div class="status-head">
+            <span id="status-icon" class="status-icon" aria-hidden="true"></span>
+            <label for="status" data-label="statusLabel"></label>
+          </div>
+          <textarea id="status" readonly rows="3"></textarea>
+          <div class="progress-row">
+            <label for="progress" id="progress-label" data-i18n="progressLabel"></label>
+            <div id="progress-track" class="progress-track">
+              <progress id="progress" max="100" value="0"></progress>
+            </div>
+            <span id="progress-value" class="progress-value" aria-hidden="true">0%</span>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button id="open-file" type="button" class="btn btn-ghost" data-label="openFile" disabled></button>
+          <button id="open-folder" type="button" class="btn btn-ghost" data-label="openFolder" disabled></button>
+        </div>
+
+        <div class="footer">
+          <button id="settings" type="button" class="btn btn-text" data-label="settings"></button>
+          <button id="close" type="button" class="btn btn-text" data-label="close"></button>
+        </div>
+      </div>
+
+      <!-- settings view (SDD 6.2) -->
+      <div id="view-settings" class="page" hidden>
+        <div class="settings-head">
+          <h2 id="settings-title" tabindex="-1" data-i18n="settingsTitle"></h2>
+          <button id="settings-back" type="button" class="btn btn-ghost" data-label="settingsBack"></button>
+        </div>
+
+        <div class="field">
+          <label for="s-folder" data-i18n="defaultFolderLabel"></label>
+          <div class="row">
+            <input id="s-folder" type="text" readonly />
+            <button id="s-browse" type="button" class="btn btn-ghost" data-label="settingsBrowse"></button>
+          </div>
+        </div>
+
+        <fieldset id="s-announce">
+          <legend data-label="announceLegend"></legend>
+          <label class="choice"><input type="radio" name="announce" value="10" /><span data-i18n="announce10"></span></label>
+          <label class="choice"><input type="radio" name="announce" value="25" /><span data-i18n="announce25"></span></label>
+          <label class="choice"><input type="radio" name="announce" value="0" /><span data-i18n="announceOff"></span></label>
+        </fieldset>
+
+        <fieldset id="s-theme">
+          <legend data-label="themeLegend"></legend>
+          <label class="choice"><input type="radio" name="theme" value="system" /><span data-i18n="themeSystem"></span></label>
+          <label class="choice"><input type="radio" name="theme" value="light" /><span data-i18n="themeLight"></span></label>
+          <label class="choice"><input type="radio" name="theme" value="dark" /><span data-i18n="themeDark"></span></label>
+        </fieldset>
+
+        <fieldset id="s-motion">
+          <legend data-label="motionLegend"></legend>
+          <label class="choice"><input type="radio" name="motion" value="system" /><span data-i18n="motionSystem"></span></label>
+          <label class="choice"><input type="radio" name="motion" value="on" /><span data-i18n="motionOn"></span></label>
+          <label class="choice"><input type="radio" name="motion" value="off" /><span data-i18n="motionOff"></span></label>
+        </fieldset>
+
+        <label class="choice"><input id="s-thumbnails" type="checkbox" /><span data-label="thumbnailsLabel"></span></label>
+
+        <div class="field">
+          <label for="s-language" data-label="languageLabel"></label>
+          <div class="select-wrap">
+            <select id="s-language">
+              <option value="pt-BR" lang="pt-BR">Português (Brasil)</option>
+              <option value="en" lang="en">English</option>
+            </select>
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="m5 8 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+        </div>
+
+        <label class="choice"><input id="s-shortcut-enabled" type="checkbox" /><span data-label="shortcutEnabled"></span></label>
+        <div class="field">
+          <label for="s-shortcut" data-label="shortcutLabel"></label>
+          <div class="row">
+            <input id="s-shortcut" type="text" readonly aria-describedby="s-shortcut-help s-shortcut-msg" />
+            <button id="s-shortcut-reset" type="button" class="btn btn-ghost" data-label="shortcutReset"></button>
+          </div>
+          <p id="s-shortcut-help" class="help" data-i18n="shortcutHelp"></p>
+          <p id="s-shortcut-msg" class="settings-message is-error" hidden></p>
+        </div>
+
+        <label class="choice"><input id="s-start" type="checkbox" /><span data-label="startWithWindows"></span></label>
+
+        <div class="field">
+          <label for="s-version" data-i18n="engineVersionLabel"></label>
+          <div class="row">
+            <input id="s-version" type="text" readonly />
+            <button id="s-update" type="button" class="btn btn-ghost" data-label="updateEngine"></button>
+          </div>
+          <p id="s-update-msg" class="settings-message" hidden></p>
+        </div>
+      </div>
+    </main>
+
+    <!-- dialogs (RA-07) -->
+    <dialog id="dlg-choice" aria-labelledby="dlg-choice-title" aria-describedby="dlg-choice-text">
+      <h2 id="dlg-choice-title" data-i18n="dlgChoiceTitle"></h2>
+      <p id="dlg-choice-text" data-i18n="dlgChoiceText"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-primary" data-value="video" data-label="dlgOnlyVideo"></button>
+        <button type="button" class="btn btn-ghost" data-value="playlist" data-label="dlgWholePlaylist"></button>
+        <button type="button" class="btn btn-text" data-value="back" data-label="dlgBack"></button>
+      </div>
+    </dialog>
+
+    <dialog id="dlg-confirm" aria-labelledby="dlg-confirm-title" aria-describedby="dlg-confirm-text">
+      <h2 id="dlg-confirm-title" data-i18n="dlgConfirmTitle"></h2>
+      <p id="dlg-confirm-text"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-primary" data-value="yes" data-label="dlgYes"></button>
+        <button type="button" class="btn btn-ghost" data-value="no" data-label="dlgNo"></button>
+      </div>
+    </dialog>
+
+    <dialog id="dlg-close" aria-labelledby="dlg-close-title" aria-describedby="dlg-close-text">
+      <h2 id="dlg-close-title" data-i18n="dlgCloseTitle"></h2>
+      <p id="dlg-close-text" data-i18n="dlgCloseText"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-primary" data-value="background" data-label="dlgBackground"></button>
+        <button type="button" class="btn btn-danger" data-value="cancel" data-label="dlgCancelDownload"></button>
+        <button type="button" class="btn btn-text" data-value="back" data-label="dlgGoBack"></button>
+      </div>
+    </dialog>
+
+    <dialog id="dlg-notice" aria-labelledby="dlg-notice-title" aria-describedby="dlg-notice-text">
+      <h2 id="dlg-notice-title" data-i18n="noticeTitle"></h2>
+      <p id="dlg-notice-text" data-i18n="notice"></p>
+      <div class="dialog-buttons">
+        <button type="button" class="btn btn-primary" data-value="ok" data-label="noticeOk"></button>
+      </div>
+    </dialog>
+  </body>
+</html>

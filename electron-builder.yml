@@ -1,0 +1,54 @@
+# Baixar YouTube - packaging (SDD 9). Usage: npm run dist (tests first, then this).
+appId: com.weliveiracruz.baixaryoutube
+productName: Baixar YouTube
+copyright: Copyright (C) 2026 weliveiracruz
+directories:
+  output: dist
+  buildResources: resources/icons
+files:
+  - build/**/*
+  - package.json
+asar: true
+compression: maximum
+extraResources:
+  # yt-dlp and FFmpeg outside the asar: they are programs run by the app (SDD 4.4).
+  - from: resources/bin
+    to: bin
+    filter:
+      - "**/*"
+      - "!.gitkeep"
+  - from: resources/icons
+    to: icons
+  - from: COPYING.txt
+    to: COPYING.txt
+# Electron Fuses (RS-09): no RunAsNode, no inspector, the app only from the checked asar.
+electronFuses:
+  runAsNode: false
+  enableCookieEncryption: true
+  enableNodeOptionsEnvironmentVariable: false
+  enableNodeCliInspectArguments: false
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+  grantFileProtocolExtraPrivileges: false
+win:
+  icon: resources/icons/app.ico
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Baixar YouTube
+  uninstallDisplayName: Baixar YouTube
+  deleteAppDataOnUninstall: false
+  installerLanguages: [pt_BR, en_US]
+  language: "1046"
+  artifactName: BaixarYoutube-Setup-${version}.${ext}
+portable:
+  artifactName: BaixarYoutube-${version}-portable.${ext}

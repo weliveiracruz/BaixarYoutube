@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR" data-motion="system">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' data:" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manual do Baixar YouTube</title>
+    <link rel="stylesheet" href="../styles/tokens.css" />
+    <link rel="stylesheet" href="../styles/base.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="manual.css" />
+  </head>
+  <body>
+    <header class="app-header"><h1>Manual do Baixar YouTube</h1></header>
+    <main class="page manual">
+      <p>O Baixar YouTube baixa vídeos e playlists do YouTube e do YouTube Music, ou só o áudio, numa janela simples e acessível com leitor de tela, teclado, lupa e alto contraste. Esc fecha este manual.</p>
+
+      <h2>Antes de começar</h2>
+      <p>Baixe só o que você tem direito de baixar, respeitando os direitos autorais e os Termos de Serviço do YouTube. O aplicativo não usa contas, cookies nem guarda histórico de links. O yt-dlp e o FFmpeg já vêm dentro do aplicativo: nada mais precisa ser instalado.</p>
+      <p>Na primeira vez, o Windows pode mostrar "O Windows protegeu o computador", porque o aplicativo ainda não tem assinatura digital. Escolha "Mais informações" e depois "Executar assim mesmo".</p>
+
+      <h2>Baixar um vídeo</h2>
+      <ol>
+        <li>Copie o link do vídeo no navegador. Ao abrir o aplicativo, o link da área de transferência já aparece no campo URL, selecionado.</li>
+        <li>Assim que o link é válido, aparece a prévia com a miniatura, o título, o canal e a duração. O título também é falado.</li>
+        <li>Escolha a pasta (Alt+E) e o formato (Alt+F): Vídeo MP4 na melhor qualidade, 720p ou 360p, Áudio MP3 ou Áudio M4A.</li>
+        <li>Pressione Enter ou Alt+B para Baixar. O progresso é falado a cada 10% (ajustável em Configurações) e aparece na barra e no campo Situação.</li>
+        <li>No fim, use Abrir arquivo (Alt+A) ou Abrir pasta (Alt+P). Nada é sobrescrito: um arquivo repetido vira "título (2)".</li>
+      </ol>
+
+      <h2>Baixar uma playlist</h2>
+      <p>Cole o link de uma playlist, de um álbum do YouTube Music ou de um mix. O aplicativo lê a lista e pergunta se baixa todos os vídeos. Eles vão para uma pasta nova com o nome da playlist, numerados na ordem ("001 - título"). Vídeos privados ou removidos são pulados e contados no fim. Se o link for de um vídeo dentro de uma playlist, o aplicativo pergunta se você quer só o vídeo ou a playlist inteira. Cancelar mantém os arquivos que já terminaram.</p>
+
+      <h2>Teclas</h2>
+      <table>
+        <caption class="visually-hidden">Teclas da janela principal</caption>
+        <thead><tr><th scope="col">Tecla</th><th scope="col">Ação</th></tr></thead>
+        <tbody>
+          <tr><td>Ctrl+Alt+Y</td><td>Abre a janela de qualquer lugar do Windows (configurável)</td></tr>
+          <tr><td>Alt+U</td><td>Campo URL</td></tr>
+          <tr><td>Alt+D / Alt+E</td><td>Pasta de download / Escolher pasta</td></tr>
+          <tr><td>Alt+F</td><td>Formato</td></tr>
+          <tr><td>Enter, Alt+B / Alt+C</td><td>Baixar / Cancelar</td></tr>
+          <tr><td>Alt+S</td><td>Campo Situação</td></tr>
+          <tr><td>Alt+A / Alt+P</td><td>Abrir arquivo / Abrir pasta</td></tr>
+          <tr><td>Alt+G</td><td>Configurações</td></tr>
+          <tr><td>Esc, Alt+H, Alt+F4</td><td>Fechar</td></tr>
+          <tr><td>Ctrl+L</td><td>Volta ao campo URL</td></tr>
+          <tr><td>Ctrl+= / Ctrl+- / Ctrl+0</td><td>Aumenta, diminui ou restaura o tamanho de tudo</td></tr>
+          <tr><td>F1</td><td>Este manual</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Fechar durante um download</h2>
+      <p>O aplicativo pergunta: continuar em segundo plano (a janela some e fica o ícone na área de notificação; o fim é avisado por notificação do Windows), cancelar o download ou voltar. Sair pelo ícone da área de notificação também cancela e apaga os arquivos incompletos.</p>
+
+      <h2>Configurações</h2>
+      <p>Pasta padrão, frequência dos anúncios (10%, 25% ou desligado), tema (seguir o Windows, claro, escuro), animações (seguir o Windows, ligadas, desligadas), mostrar a miniatura do vídeo, idioma, atalho global, iniciar com o Windows e a versão do mecanismo de download, com o botão Atualizar o mecanismo de download. Com a miniatura desligada, nenhuma imagem é buscada.</p>
+
+      <h2>Quando algo dá errado</h2>
+      <ul>
+        <li><strong>"O YouTube mudou"</strong> ou <strong>"confirmar que não é um robô"</strong>: em Configurações, use Atualizar o mecanismo de download e tente de novo.</li>
+        <li><strong>"O mecanismo de download está faltando ou danificado"</strong>: o antivírus pode ter bloqueado o yt-dlp.exe. Reinstale o aplicativo ou libere a pasta dele no antivírus.</li>
+        <li><strong>Vídeo privado, com restrição de idade ou só para membros</strong>: o aplicativo não usa contas e não consegue baixar.</li>
+      </ul>
+
+      <h2>Licenças</h2>
+      <p>Baixar YouTube: GPL-2.0. yt-dlp: Unlicense. FFmpeg: GPL (build shared do yt-dlp/FFmpeg-Builds). As licenças estão na pasta resources\bin do aplicativo. As cores seguem a linguagem visual do Nubank; o aplicativo não é um produto do Nubank.</p>
+    </main>
+  </body>
+</html>
